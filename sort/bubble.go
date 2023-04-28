@@ -8,7 +8,7 @@ func BubbleSort[T comparable](slice []T, isAscending bool) {
 			var comparation bool
 
 			if (isAscending) {
-				comparation = slice[j] > slice[j + 1];
+				comparation = slice[j] < slice[j + 1];
 			} else {
 				comparation = slice[j] < slice[j + 1];
 			}
