@@ -2,7 +2,7 @@ package sort
 
 // Sort an array using bubble sort algorithm
 // WARNING:	This method mutates the slice
-func BubbleSort[T comparable](slice []T, isAscending bool) {
+func Bubble[T comparable](slice []T, isAscending bool) {
 	for i := range slice {
 		for j := 0; j < len(slice) - i - 1; j++ {
 			var comparation bool

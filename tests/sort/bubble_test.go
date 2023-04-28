@@ -10,7 +10,7 @@ import (
 func TestBubbleSortIntAscending(t *testing.T) {
 	unsortedSlice := tests.GenerateRandomIntSlice(200, 100, true)
 
-	sort.BubbleSort(unsortedSlice, true)
+	sort.Bubble(unsortedSlice, true)
 
 	for i := 0; i < len(unsortedSlice) - 1; i++ {
 		if (unsortedSlice[i] > unsortedSlice[i + 1]) {
@@ -22,7 +22,7 @@ func TestBubbleSortIntAscending(t *testing.T) {
 func TestBubbleSortIntDescending(t *testing.T) {
 	unsortedSlice := tests.GenerateRandomIntSlice(200, 10000, true)
 
-	sort.BubbleSort(unsortedSlice, false)
+	sort.Bubble(unsortedSlice, false)
 
 	for i := 0; i < len(unsortedSlice) - 1; i++ {
 		if (unsortedSlice[i] < unsortedSlice[i + 1]) {
@@ -34,7 +34,7 @@ func TestBubbleSortIntDescending(t *testing.T) {
 func TestBubbleSortFloatAscending(t *testing.T) {
 	unsortedSlice := tests.GenerateRandomFloatSlice(200, 10000, true)
 
-	sort.BubbleSort(unsortedSlice, true)
+	sort.Bubble(unsortedSlice, true)
 
 	for i := 0; i < len(unsortedSlice) - 1; i++ {
 		if (unsortedSlice[i] > unsortedSlice[i + 1]) {
@@ -46,7 +46,7 @@ func TestBubbleSortFloatAscending(t *testing.T) {
 func TestBubbleSortFloatDescending(t *testing.T) {
 	unsortedSlice := tests.GenerateRandomFloatSlice(200, 10000, true)
 
-	sort.BubbleSort(unsortedSlice, false)
+	sort.Bubble(unsortedSlice, false)
 
 	for i := 0; i < len(unsortedSlice) - 1; i++ {
 		if (unsortedSlice[i] < unsortedSlice[i + 1]) {
@@ -58,7 +58,7 @@ func TestBubbleSortFloatDescending(t *testing.T) {
 func TestBubbleSortRuneAscending(t *testing.T) {
 	unsortedSlice := tests.GenerateRandomRuneSlice(200)
 
-	sort.BubbleSort(unsortedSlice, true)
+	sort.Bubble(unsortedSlice, true)
 
 	for i := 0; i < len(unsortedSlice) - 1; i++ {
 		if (unsortedSlice[i] > unsortedSlice[i + 1]) {
@@ -70,7 +70,7 @@ func TestBubbleSortRuneAscending(t *testing.T) {
 func TestBubbleSortRuneDescending(t *testing.T) {
 	unsortedSlice := tests.GenerateRandomRuneSlice(200)
 
-	sort.BubbleSort(unsortedSlice, false)
+	sort.Bubble(unsortedSlice, false)
 
 	for i := 0; i < len(unsortedSlice) - 1; i++ {
 		if (unsortedSlice[i] < unsortedSlice[i + 1]) {
