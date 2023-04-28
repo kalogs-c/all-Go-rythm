@@ -52,3 +52,17 @@ func GenerateRandomRuneSlice(size int) []rune {
 
 	return runes
 }
+
+func GenerateOrderedIntSlice(size int, ascending bool) []int {
+	ints := make([]int, size)
+
+	for i := range ints {
+		if ascending {
+			ints[i] = i + 1
+		} else {
+			ints[i] = len(ints) - i
+		}
+	}
+
+	return ints
+}
