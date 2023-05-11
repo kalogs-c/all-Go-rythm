@@ -1,8 +1,6 @@
 package sort
 
 import (
-	"fmt"
-
 	"golang.org/x/exp/constraints"
 )
 
@@ -11,7 +9,6 @@ func qs[T constraints.Ordered](slice []T, low, high int) {
 		return
 	}
 	pivot := slice[high]
-	fmt.Println(slice)
 
 	pivotIndex := partition(slice, low, high, pivot)
 
