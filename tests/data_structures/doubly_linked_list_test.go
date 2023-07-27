@@ -17,10 +17,21 @@ func TestLinkedList(t *testing.T) {
 	lk.InsertAt(3, 6)
 	lk.InsertAt(3, 5)
 
+	err := lk.Remove(func(curr int) bool {
+		return curr == 3
+	})
+	if err != nil {
+		t.Error(err)
+	}
+
+	lk.ForEach(func(curr int) int {
+		return curr * 20
+	})
+
 	slc := lk.ToSlice()
 
 	if len(slc) == 0 {
-		t.Errorf("Error len == 0 ")
+		t.Errorf("Error len == 0")
 	}
 
 	for _, v := range slc {

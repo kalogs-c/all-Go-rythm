@@ -1,6 +1,9 @@
 package data_structures
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type lk_node[T any] struct {
 	value T
@@ -32,6 +35,10 @@ func NewLinkedList[T any]() *LinkedList[T] {
 
 func (lk *LinkedList[T]) addLen() {
 	lk.len++
+}
+
+func (lk *LinkedList[T]) subLen() {
+	lk.len--
 }
 
 func (lk *LinkedList[T]) ToSlice() []T {
@@ -104,4 +111,60 @@ func (lk *LinkedList[T]) InsertAt(index uint, value T) error {
 	curr.prev = node
 
 	return nil
+}
+
+func (lk *LinkedList[T]) Remove(validation_func func(curr T) bool) error {
+	var target *lk_node[T]
+
+	var curr *lk_node[T]
+	for curr = lk.head; curr != nil; curr = curr.next {
+		if validation_func(curr.value) {
+			target = curr
+			break
+		}
+	}
+
+	if target == nil {
+		return fmt.Errorf("item not found")
+	}
+
+	lk.subLen()
+	if lk.len == 0 {
+		lk.head, lk.tail = nil, nil
+		return nil
+	}
+
+	target_prev := target.prev
+	target_next := target.next
+
+	if lk.head == target {
+		lk.head = target_next
+		target_next.prev = nil
+		return nil
+	}
+
+	if lk.tail == target {
+		lk.tail = target_prev
+		target_prev.next = nil
+		return nil
+	}
+
+	target_prev.next, target_next.prev = target_next, target_prev
+
+	return nil
+}
+
+func (lk *LinkedList[T]) ForEach(f func(curr T) T) {
+	wg := new(sync.WaitGroup)
+	wg.Add(int(lk.len))
+
+	var curr *lk_node[T]
+	for curr = lk.head; curr != nil; curr = curr.next {
+		go func(curr *lk_node[T]) {
+			curr.value = f(curr.value)
+			wg.Done()
+		}(curr)
+	}
+
+	wg.Wait()
 }
