@@ -42,10 +42,12 @@ func (lk *LinkedList[T]) subLen() {
 }
 
 func (lk *LinkedList[T]) ToSlice() []T {
-	slc := []T{}
+	slc := make([]T, lk.len)
+	index := 0
 	curr := lk.head
 	for curr != nil {
-		slc = append(slc, curr.value)
+		slc[index] = curr.value
+		index++
 		curr = curr.next
 	}
 
@@ -82,6 +84,34 @@ func (lk *LinkedList[T]) Append(value T) {
 	lk.tail = node
 }
 
+func (lk *LinkedList[T]) Get(index uint) (T, error) {
+	var default_value T
+
+	if index > lk.len-1 {
+		return default_value, fmt.Errorf(
+			"index out of bounds, the linked list has lenth of %d but the index is %d\n",
+			lk.len,
+			index,
+		)
+	}
+
+	if index == 0 {
+		return lk.head.value, nil
+	}
+
+	if index == lk.len-1 {
+		return lk.tail.value, nil
+	}
+
+	var i uint
+	var curr *lk_node[T] = lk.head
+	for i = 0; i < index; i++ {
+		curr = curr.next
+	}
+
+	return curr.value, nil
+}
+
 func (lk *LinkedList[T]) InsertAt(index uint, value T) error {
 	if index > lk.len {
 		return fmt.Errorf(
@@ -100,14 +130,14 @@ func (lk *LinkedList[T]) InsertAt(index uint, value T) error {
 	}
 
 	lk.addLen()
-	curr := *lk.head
+	curr := lk.head
 	for curr.next != nil {
-		curr = *curr.next
+		curr = curr.next
 	}
 
 	node := newNode(value)
 	curr.prev.next = node
-	node.prev, node.next = curr.prev, &curr
+	node.prev, node.next = curr.prev, curr
 	curr.prev = node
 
 	return nil
@@ -116,8 +146,7 @@ func (lk *LinkedList[T]) InsertAt(index uint, value T) error {
 func (lk *LinkedList[T]) Remove(validation_func func(curr T) bool) error {
 	var target *lk_node[T]
 
-	var curr *lk_node[T]
-	for curr = lk.head; curr != nil; curr = curr.next {
+	for curr := lk.head; curr != nil; curr = curr.next {
 		if validation_func(curr.value) {
 			target = curr
 			break
@@ -150,6 +179,40 @@ func (lk *LinkedList[T]) Remove(validation_func func(curr T) bool) error {
 	}
 
 	target_prev.next, target_next.prev = target_next, target_prev
+
+	return nil
+}
+
+func (lk *LinkedList[T]) RemoveAt(index uint) error {
+	if index > lk.len-1 {
+		return fmt.Errorf(
+			"index out of bounds, the linked list has lenth of %d but the index is %d\n",
+			lk.len,
+			index,
+		)
+	}
+
+	defer lk.subLen()
+
+	if index == 0 {
+		lk.head = lk.head.next
+		lk.head.prev = nil
+		return nil
+	}
+
+	if index == lk.len-1 {
+		lk.tail = lk.tail.prev
+		lk.tail.next = nil
+		return nil
+	}
+
+	var i uint
+	var curr *lk_node[T] = lk.head
+	for i = 0; i < index; i++ {
+		curr = curr.next
+	}
+
+	curr.prev.next, curr.next.prev = curr.next, curr.prev
 
 	return nil
 }
