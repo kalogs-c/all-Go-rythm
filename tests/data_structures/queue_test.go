@@ -33,7 +33,7 @@ func TestQueueDequeue(t *testing.T) {
 		t.Error(err)
 	}
 
-	if *item != 1 {
+	if item != 1 {
 		t.Errorf("expected 1, got %v", item)
 	}
 

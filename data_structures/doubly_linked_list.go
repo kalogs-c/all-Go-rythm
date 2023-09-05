@@ -6,15 +6,13 @@ import (
 )
 
 type lk_node[T any] struct {
-	value T
-	next  *lk_node[T]
-	prev  *lk_node[T]
+	value      T
+	next, prev *lk_node[T]
 }
 
 type LinkedList[T any] struct {
-	head *lk_node[T]
-	tail *lk_node[T]
-	len  uint
+	head, tail *lk_node[T]
+	len        uint
 }
 
 func newNode[T any](value T) *lk_node[T] {

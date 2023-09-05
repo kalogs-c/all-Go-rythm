@@ -1,9 +1,8 @@
 package binary_tree
 
 type BinaryNode[T any] struct {
-	Value T
-	Left  *BinaryNode[T]
-	Right *BinaryNode[T]
+	Value       T
+	Left, Right *BinaryNode[T]
 }
 
 func NewBinaryNode[T any](value T) *BinaryNode[T] {

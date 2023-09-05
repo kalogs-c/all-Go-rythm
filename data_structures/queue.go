@@ -10,9 +10,8 @@ type qnode[T any] struct {
 }
 
 type Queue[T any] struct {
-	head   *qnode[T]
-	tail   *qnode[T]
-	length uint
+	head, tail *qnode[T]
+	length     uint
 }
 
 func NewQueue[T any]() *Queue[T] {
@@ -28,7 +27,7 @@ func (q *Queue[T]) addLen() {
 }
 
 func (q *Queue[T]) subLen() {
-	q.length++
+	q.length--
 }
 
 func (q *Queue[T]) Enqueue(item T) {
@@ -49,17 +48,18 @@ func (q *Queue[T]) Enqueue(item T) {
 	q.tail = &node
 }
 
-func (q *Queue[T]) Dequeue() (*T, error) {
+func (q *Queue[T]) Dequeue() (T, error) {
+	var defaultValue T
 	if q.length == 0 {
-		return nil, errors.New("Queue is empty")
+		return defaultValue, errors.New("Queue is empty")
 	}
 
 	defer q.subLen()
 
-	node := q.head
+	value := q.head.value
 	q.head = q.head.next
 
-	return &node.value, nil
+	return value, nil
 }
 
 func (q *Queue[T]) ToSlice() []T {
@@ -79,4 +79,8 @@ func (q *Queue[T]) ToSlice() []T {
 
 func (q *Queue[T]) Len() uint {
 	return q.length
+}
+
+func (q *Queue[T]) Empty() bool {
+	return q.length == 0
 }
