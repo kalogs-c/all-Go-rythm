@@ -54,10 +54,14 @@ func (q *Queue[T]) Dequeue() (T, error) {
 		return defaultValue, errors.New("Queue is empty")
 	}
 
-	defer q.subLen()
-
 	value := q.head.value
 	q.head = q.head.next
+
+	q.subLen()
+	if q.length == 0 {
+		q.head = nil
+		q.tail = nil
+	}
 
 	return value, nil
 }

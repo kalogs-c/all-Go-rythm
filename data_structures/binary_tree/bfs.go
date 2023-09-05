@@ -18,11 +18,11 @@ func (n *BinaryNode[T]) BFExec(f func(*BinaryNode[T])) {
 			panic(err)
 		}
 		f(v)
-		if n.Left != nil {
-			q.Enqueue(n.Left)
+		if v.Left != nil {
+			q.Enqueue(v.Left)
 		}
-		if n.Right != nil {
-			q.Enqueue(n.Right)
+		if v.Right != nil {
+			q.Enqueue(v.Right)
 		}
 	}
 }
@@ -43,11 +43,11 @@ func (n *BinaryNode[T]) BFExecAsync(f func(*BinaryNode[T]), wg *sync.WaitGroup) 
 			f(v)
 			wg.Done()
 		}()
-		if n.Left != nil {
-			q.Enqueue(n.Left)
+		if v.Left != nil {
+			q.Enqueue(v.Left)
 		}
-		if n.Right != nil {
-			q.Enqueue(n.Right)
+		if v.Right != nil {
+			q.Enqueue(v.Right)
 		}
 	}
 }
